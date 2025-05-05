@@ -1,0 +1,137 @@
+.input-field {
+  position: relative;
+  margin-bottom: 1.5rem;
+  --primary-color: #646cff;
+  --error-color: #ff4444;
+  --text-color: #213547;
+  --border-color: #e2e8f0;
+  --highlight-color: rgba(100, 108, 255, 0.1);
+
+  .input-container {
+    position: relative;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 9px;
+      background: linear-gradient(
+        45deg,
+        var(--primary-color),
+        rgba(100, 108, 255, 0.5),
+        var(--primary-color)
+      );
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+  }
+
+  input {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    font-size: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+  }
+
+  label {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0 0.5rem;
+    color: #64748b;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    background: linear-gradient(180deg, transparent 50%, white 50%);
+
+    .required {
+      color: var(--error-color);
+      margin-left: 0.25rem;
+    }
+  }
+
+  .input-highlight {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 0;
+    height: 100%;
+    background: var(--highlight-color);
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+    pointer-events: none;
+    border-radius: 8px;
+  }
+
+  &.focused {
+    .input-container::before {
+      opacity: 1;
+    }
+
+    label {
+      top: 0;
+      transform: translateY(-50%) scale(0.9);
+      color: var(--primary-color);
+    }
+
+    .input-highlight {
+      width: 100%;
+    }
+  }
+
+  input:not(:placeholder-shown) + label {
+    top: 0;
+    transform: translateY(-50%) scale(0.9);
+  }
+
+  &.error {
+    .input-container::before {
+      background: linear-gradient(
+        45deg,
+        var(--error-color),
+        rgba(255, 68, 68, 0.5),
+        var(--error-color)
+      );
+    }
+
+    input {
+      border-color: var(--error-color);
+    }
+
+    label {
+      color: var(--error-color);
+    }
+  }
+
+  .error-message {
+    position: absolute;
+    left: 0;
+    bottom: -1.5rem;
+    font-size: 0.875rem;
+    color: var(--error-color);
+    opacity: 0;
+    transform: translateY(-0.5rem);
+    animation: slideUp 0.3s ease forwards;
+  }
+}
+
+@keyframes slideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
